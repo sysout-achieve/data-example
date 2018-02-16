@@ -8,7 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.stetho.Stetho;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +24,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        /*-Stetho-------------------------------*/
+        Stetho.initializeWithDefaults(this);
+
+        new OkHttpClient.Builder()
+                .addNetworkInterceptor(new StethoInterceptor())
+                .build();
+
+            /*data*/
         final TextView text = (TextView) findViewById(R.id.text_id);
         final TextView size_id = (TextView) findViewById(R.id.size_id);
 
@@ -29,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn = (Button) findViewById(R.id.btn);
         Button btn2 = (Button) findViewById(R.id.btn2);
 
-        SharedPreferences name = getSharedPreferences("name" , MODE_PRIVATE);
+        SharedPreferences name= getSharedPreferences("name", MODE_PRIVATE);
         SharedPreferences.Editor editor = name.edit();
         SharedPreferences size = getSharedPreferences("size", MODE_PRIVATE);
         SharedPreferences.Editor editsize = size.edit();
@@ -60,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences gd = getSharedPreferences(input.getText().toString(), MODE_PRIVATE);
                 text.setText(gd.getString("1",""));
-                size_id.setText(gd.getString("2",""));
+                size_id.setText(gd.getString("1",""));
             }
         });
 
